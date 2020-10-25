@@ -12,7 +12,7 @@
 
 > *WSL (Windows Subsystem Linux) is not supported
 
-## Preparing environment
+## Installation
 
 - Execute the following to install the dependencies mentioned above
   
@@ -37,8 +37,16 @@
   
   ```bash
     ./gencert.sh
-    docker-compose up -d
+    mv full.pem nginx/
   ```
+
+- Start the deployment    
+  
+  ```bash
+    docker-compose up -d --build
+  ```
+  
+  You will need to use this command after every change to any of the configuration files gwproxy.env, subfilter.sh, docker-compose.yaml, if any.
 
 - Add hosts records to your system hosts file as follows
   
@@ -49,5 +57,9 @@
   In case the machine running the project is not your local computer, replace **127.0.0.1** with the project host IP,
   
   make sure that tcp ports 80 and 443 are reachable and not blocked by firewall.
+  
+  ## Access the proxied site
+  
+  You can access the proxied site by browsing [engineering.glasswallsolutions.com.glasswall-icap.com](https://engineering.glasswallsolutions.com.glasswall-icap.com) after adding `k8-reverse-proxy/stable-src/server.crt` to your browser/system ssl trust store.
 
 
