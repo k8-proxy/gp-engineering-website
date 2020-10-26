@@ -1,0 +1,28 @@
+[req]
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+
+[req_distinguished_name]
+countryName = GB
+countryName_default = GB
+stateOrProvinceName = London
+stateOrProvinceName_default = London
+localityName = 
+localityName_default = 
+organizationalUnitName = Glasswall Solutions Ltd.
+organizationalUnitName_default = Glasswall Solutions Ltd.
+commonName = Glasswall Solutions Ltd.
+commonName_default = Glasswall Solutions Ltd.
+commonName_max = 64
+
+[ v3_req ]
+# Extensions to add to a certificate request
+#basicConstraints = CA:FALSE
+keyUsage = critical, digitalSignature, keyAgreement
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = engineering.glasswallsolutions.com.glasswall-icap.com
+DNS.2 = *.engineering.glasswallsolutions.com.glasswall-icap.com
+DNS.3 = gw-demo-sample-files-eu1.s3-eu-west-1.amazonaws.com.glasswall-icap.com
