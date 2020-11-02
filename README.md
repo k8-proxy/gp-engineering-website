@@ -31,7 +31,7 @@
   ```bash
     git clone --recursive https://github.com/k8-proxy/k8-reverse-proxy
     git clone https://github.com/k8-proxy/gp-engineering-website
-    wget https://github.com/filetrust/Glasswall-Rebuild-SDK-Evaluation/raw/master/Linux/Library/libglasswall.classic.so -O k8-reverse-proxy/stable-src/c-icap/Glasswall-Rebuild-SDK-Evaluation/Linux/Library/libglasswall.classic.so
+    wget https://github.com/filetrust/sdk-rebuild-eval/raw/master/libs/rebuild/linux/libglasswall.classic.so -O k8-reverse-proxy/stable-src/c-icap/Glasswall-Rebuild-SDK-Evaluation/Linux/Library/libglasswall.classic.so
     cp -rf gp-engineering-website/* k8-reverse-proxy/stable-src/
     cd k8-reverse-proxy/stable-src/
   ```
