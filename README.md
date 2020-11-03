@@ -12,6 +12,38 @@
 
 > *WSL (Windows Subsystem Linux) is not supported
 
+## Preparation
+
+We needed to check the website requests to check domains of interest, (domains that should be proxied), which typically are:
+
+- Website main domain and www subdomain (if applicable)
+
+- Domains used in redirects between website pages (example: authentication redirections)
+
+- Domains that hosts files that should be rebuilt against Glasswall rebuild engine
+
+### Finding domains of interest
+
+- Open a browser that included dev tools (i.e : **Mozilla Firefox**)
+
+- Open dev tools and switch to **Network** tab (CTRL+SHIFT+E in **Firefox**)
+
+- Visit target website main page, surf the website and try to download files while watching requested domains 
+
+- Save domains in question to be used in configuration
+
+### Configuration
+
+Use [this configuration file](https://github.com/k8-proxy/k8-reverse-proxy/blob/master/stable-src/gwproxy.env) as example
+
+- `ROOT_DOMAIN`: Domain used by the proxy (example: www.gov.uk.glasswall-icap.com is proxying www.gov.uk) 
+
+- `ALLOWED_DOMAINS` : Comma separated domains accepted by the proxy, typically this should be domains of interest with the `ROOT_DOMAIN` value appended
+
+- `SQUID_IP` IP address of squid proxy, used by nginx, should be only changed on advanced usage of the docker image
+
+- `SUBFILTER_ENV`: Space separated text substitution rules in response body, foramtted as **match,replace** , used for url rewriting as in **.gov.uk,.gov.uk.glasswall-icap.com**
+
 ## Installation
 
 - Execute the following to install the dependencies mentioned above
@@ -35,6 +67,8 @@
     cp -rf gp-engineering-website/* k8-reverse-proxy/stable-src/
     cd k8-reverse-proxy/stable-src/
   ```
+
+- Tweak `openssl.cnf` to include domains of interest in **alt_names** section
 
 - Generate new SSL credentials
   
