@@ -1,4 +1,7 @@
 full.pem
-server.key
-server.ca
-server.crt
+*.pem
+*.srl
+*.key
+*.ca
+*.crt
+*.csr

@@ -9,16 +9,20 @@ stateOrProvinceName = London
 stateOrProvinceName_default = London
 localityName = 
 localityName_default = 
+organizationName = Glasswall Solutions Ltd.
+organizationName_default = Glasswall Solutions Ltd.
 organizationalUnitName = Glasswall Solutions Ltd.
 organizationalUnitName_default = Glasswall Solutions Ltd.
-commonName = Glasswall Solutions Ltd.
-commonName_default = Glasswall Solutions Ltd.
+commonName = glasswall-icap.com
+commonName_default = glasswall-icap.com
 commonName_max = 64
+
+[CA]
+copy_extensions = copy
 
 [ v3_req ]
 # Extensions to add to a certificate request
-#basicConstraints = CA:FALSE
-keyUsage = critical, digitalSignature, keyAgreement
+keyUsage = critical, digitalSignature, keyAgreement, keyCertSign, cRLSign, keyEncipherment
 extendedKeyUsage = serverAuth
 subjectAltName = @alt_names
 
@@ -26,3 +30,4 @@ subjectAltName = @alt_names
 DNS.1 = engineering.glasswallsolutions.com.glasswall-icap.com
 DNS.2 = *.engineering.glasswallsolutions.com.glasswall-icap.com
 DNS.3 = gw-demo-sample-files-eu1.s3-eu-west-1.amazonaws.com.glasswall-icap.com
+
