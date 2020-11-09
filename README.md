@@ -99,4 +99,4 @@ Use [this configuration file](https://github.com/k8-proxy/k8-reverse-proxy/blob/
   
   ## Access the proxied site
   
-  You can access the proxied site by browsing [engineering.glasswallsolutions.com.glasswall-icap.com](https://engineering.glasswallsolutions.com.glasswall-icap.com) after adding `k8-reverse-proxy/stable-src/server.crt` to your browser/system ssl trust store.
+  You can access the proxied site by browsing [engineering.glasswallsolutions.com.glasswall-icap.com](https://engineering.glasswallsolutions.com.glasswall-icap.com) after adding `k8-reverse-proxy/stable-src/ca.pem` to your browser/system ssl trust store.
