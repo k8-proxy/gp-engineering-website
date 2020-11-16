@@ -1,0 +1,23 @@
+[req]
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+
+[req_distinguished_name]
+countryName = GB
+countryName_default = GB
+stateOrProvinceName = London
+stateOrProvinceName_default = London
+localityName = 
+localityName_default = 
+organizationalUnitName = Glasswall Solutions Ltd.
+organizationalUnitName_default = Glasswall Solutions Ltd.
+commonName = Glasswall Solutions Ltd.
+commonName_default = Glasswall Solutions Ltd.
+commonName_max = 64
+
+[ v3_req ]
+# Extensions to add to a certificate request
+basicConstraints = CA:TRUE
+keyUsage = critical, digitalSignature, keyAgreement
+extendedKeyUsage = serverAuth
+

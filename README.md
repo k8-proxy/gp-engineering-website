@@ -40,7 +40,7 @@ Use [this configuration file](https://github.com/k8-proxy/k8-reverse-proxy/blob/
 
 - `ALLOWED_DOMAINS` : Comma separated domains accepted by the proxy, typically this should be domains of interest with the `ROOT_DOMAIN` value appended
 
-- `SQUID_IP` IP address of squid proxy, used by nginx, should be only changed on advanced usage of the docker image
+- `SQUID_IP` IP address of squid proxy, used by nginx, should be only changed on advanced usage of the docker image (example: Kubernetes)
 
 - `SUBFILTER_ENV`: Space separated text substitution rules in response body, foramtted as **match,replace** , used for url rewriting as in **.gov.uk,.gov.uk.glasswall-icap.com**
 
@@ -99,4 +99,4 @@ Use [this configuration file](https://github.com/k8-proxy/k8-reverse-proxy/blob/
   
   ## Access the proxied site
   
-  You can access the proxied site by browsing [engineering.glasswallsolutions.com.glasswall-icap.com](https://engineering.glasswallsolutions.com.glasswall-icap.com) after adding `k8-reverse-proxy/stable-src/server.crt` to your browser/system ssl trust store.
+  You can access the proxied site by browsing [engineering.glasswallsolutions.com.glasswall-icap.com](https://engineering.glasswallsolutions.com.glasswall-icap.com) after adding `k8-reverse-proxy/stable-src/ca.pem` to your browser/system ssl trust store.
