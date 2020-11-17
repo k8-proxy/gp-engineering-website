@@ -22,7 +22,7 @@ We needed to check the website requests to check domains of interest, (domains t
 
 - Domains that hosts files that should be rebuilt against Glasswall rebuild engine
 
-### Finding domains of interest
+  ### Finding domains of interest
 
 - Open a browser that included dev tools (i.e : **Mozilla Firefox**)
 
@@ -32,17 +32,17 @@ We needed to check the website requests to check domains of interest, (domains t
 
 - Save domains in question to be used in configuration
 
+![Screenshot from 2020-11-17 12-17-13](https://user-images.githubusercontent.com/58347752/99378303-f2b19e00-28cf-11eb-810c-4be71068230b.png)
+
 ### Configuration
 
-Use [this configuration file](https://github.com/k8-proxy/k8-reverse-proxy/blob/master/stable-src/gwproxy.env) as example
+Tweak **gwproxy.env** according to our configuration (a pre-configured file already included in the repository), This is a variables definition example: 
 
-- `ROOT_DOMAIN`: Domain used by the proxy (example: www.gov.uk.glasswall-icap.com is proxying www.gov.uk) 
-
-- `ALLOWED_DOMAINS` : Comma separated domains accepted by the proxy, typically this should be domains of interest with the `ROOT_DOMAIN` value appended
-
+- `ROOT_DOMAIN`: the domain appended to the original website domain, typically: glasswall-icap.com
+- `ALLOWED_DOMAINS` : Comma separated domains accepted by the proxy, typically this should be domains of interest (figured out in the previous step) with the `ROOT_DOMAIN` value appended
+- `ICAP_URL` : the URL of the ICAP server either running on a docker on the same machine or through a load-balancer server.
 - `SQUID_IP` IP address of squid proxy, used by nginx, should be only changed on advanced usage of the docker image (example: Kubernetes)
-
-- `SUBFILTER_ENV`: Space separated text substitution rules in response body, foramtted as **match,replace** , used for url rewriting as in **.gov.uk,.gov.uk.glasswall-icap.com**
+- `SUBFILTER_ENV`: Space separated text substitution rules in response body, formatted as **match,replace** , used for URL rewriting as in **.gov.uk,.gov.uk.glasswall-icap.com**
 
 ## Installation
 
@@ -65,10 +65,10 @@ Use [this configuration file](https://github.com/k8-proxy/k8-reverse-proxy/blob/
     git clone https://github.com/k8-proxy/gp-engineering-website
     wget https://github.com/filetrust/sdk-rebuild-eval/raw/master/libs/rebuild/linux/libglasswall.classic.so -O k8-reverse-proxy/stable-src/c-icap/Glasswall-Rebuild-SDK-Evaluation/Linux/Library/libglasswall.classic.so
     cp -rf gp-engineering-website/* k8-reverse-proxy/stable-src/
-    cd k8-reverse-proxy/stable-src/
+    cd k8-reverse-proxy/stable-src/  
   ```
 
-- Tweak `openssl.cnf` to include domains of interest in **alt_names** section
+- Tweak `openssl.cnf` to include domains of interest in **alt_names** section (by default, this file is pre-configured in the repository)
 
 - Generate new SSL credentials
   
@@ -78,25 +78,51 @@ Use [this configuration file](https://github.com/k8-proxy/k8-reverse-proxy/blob/
   ```
 
 - Start the deployment    
-  
+
   ```bash
     docker-compose up -d --build
   ```
+
+  From now on, you will need to use this command after every change to any of the configuration files **gwproxy.env**, **subfilter.sh**, **docker-compose.yaml**, if any.
+
+  ## Troubleshooting
+
+  Check if docker service is active   
+
+  ```bash
+    systemctl status docker
+  ```
+
+  Check if containers are up and running (not Restarting...)
+
+  ```bash
+  docker-compose ps
+  ```
+
+  If squid or nginx is not started correctly, then configuration parameters in `gwproxy.env` has been modified, execute:
+
+  ```bash
+  docker-compose up -d --force-recreate
+  ```
+
   
-  You will need to use this command after every change to any of the configuration files **gwproxy.env**, **subfilter.sh**, **docker-compose.yaml**, if any.
-  
-  ## Client configuration
+
+  ## Client configuration 
 
 - Add hosts records to your client system hosts file ( i.e **Windows**: C:\Windows\System32\drivers\etc\hosts , **Linux, macOS and  Unix-like:** /etc/hosts ) as follows
-  
+
   ```
   127.0.0.1 engineering.glasswallsolutions.com.glasswall-icap.com gw-demo-sample-files-eu1.s3-eu-west-1.amazonaws.com.glasswall-icap.com
   ```
-  
-  In case the machine running the project is not your local computer, replace **127.0.0.1** with the project host IP,
-  
+
+  In case you are using a client other than machine running the project , replace **127.0.0.1** with the project host machine IP,
+
   make sure that tcp ports **80** and **443** are reachable and not blocked by firewall.
+
+- Move ***k8-reverse-proxy/stable-src/ca.pem*** to your client machine and add it to your browser/system ssl trust store.
+
   
+
   ## Access the proxied site
-  
-  You can access the proxied site by browsing [engineering.glasswallsolutions.com.glasswall-icap.com](https://engineering.glasswallsolutions.com.glasswall-icap.com) after adding `k8-reverse-proxy/stable-src/ca.pem` to your browser/system ssl trust store.
+
+  You can access the proxied site by browsing [engineering.glasswallsolutions.com.glasswall-icap.com](https://engineering.glasswallsolutions.com.glasswall-icap.com) .
